@@ -6,13 +6,17 @@
       </h1>
     </div>
   </div></br>
-  <% @events.each_slice(3) do |row| %>
+  <% @user.events.sort {|a,b| a.date <=> b.date}.each_slice(4) do |row| %>
   <div class="row">
     <% row.each do |event| %>
       <div class="col-md-4 portfolio-item">
-
-        <img class="img-responsive" src='<%= event.image_url %>' alt=""></br>
-
+        <div class="thumbnail event-logo">
+          <% if event.image_url.present? %>
+          <img class="img-responsive event-logo" src='<%= event.image_url %>' alt=""></br>
+          <% else %>
+            <%= image_tag('networking_function.jpg')%>
+          <% end %>
+        </div>
         <h3 class="name-center"><%= link_to event.group_name, event_path(event)%></h3>
         <p><%= event.date.strftime("%B %d, %Y %I:%M %p") %></p>
         <p><%= strip_tags(event.description).truncate(200) %></p>
@@ -30,6 +34,6 @@
           </div>
       </div>
       <% end %>
-  </div></br>
+  </div></br></br>
     <% end %>
 </div>
